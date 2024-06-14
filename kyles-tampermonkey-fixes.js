@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CQ Style Enhancements
 // @namespace    http://tampermonkey.net/
-// @version      0.5
+// @version      0.6
 // @description  Apply custom styles to cq elements to fix issues
 // @author       YourName
 // @match        *://*/*
@@ -50,6 +50,31 @@ coral-columnview-preview-asset img {
 .cloudlets-app, .container, .ng-scope {
 width:100%;
 }
+
+
+
+/* Pretty scrollbar
+::-webkit-scrollbar {
+  width: 10px;
+  height:10px;
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #E6E8F7;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #4D60C8;
+  border-radius: 10px;
+  width: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5E7AB4;
+}
+
+coral-shell-content {
+	scrollbar-width: none;*/
+
+`;
 
   const style = document.createElement('style');
   style.type = 'text/css';
