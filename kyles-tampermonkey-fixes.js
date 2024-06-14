@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CQ Style Enhancements
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  Apply custom styles to cq elements to fix issues
 // @author       YourName
 // @match        *://*/*
@@ -53,7 +53,7 @@ width:100%;
 
 
 
-/* Pretty scrollbar*/
+/* Pretty scrollbar
 ::-webkit-scrollbar {
   width: 10px;
   height:10px;
@@ -74,7 +74,7 @@ width:100%;
 coral-shell-content {
 	scrollbar-width: none;
 
-`;
+`;*/
 
   const style = document.createElement('style');
   style.type = 'text/css';
