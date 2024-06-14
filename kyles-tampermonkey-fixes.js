@@ -6,6 +6,8 @@
 // @author       YourName
 // @match        *://*/*
 // @grant        none
+// @updateURL    https://raw.githubusercontent.com/kyleobyte/cqfix/main/kyles-tampermonkey-fixes.js
+// @downloadURL  https://raw.githubusercontent.com/kyleobyte/cqfix/main/kyles-tampermonkey-fixes.js
 // ==/UserScript==
 
 (function () {
