@@ -51,7 +51,7 @@ width:100%;
 
 
 
-/* Pretty scrollbar
+/* Pretty scrollbar*/
 ::-webkit-scrollbar {
   width: 10px;
   height:10px;
@@ -70,7 +70,7 @@ width:100%;
 }
 
 coral-shell-content {
-	scrollbar-width: none;*/
+	scrollbar-width: none;
 
 `;
 
