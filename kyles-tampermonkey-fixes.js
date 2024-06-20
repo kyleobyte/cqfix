@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CQ Style Enhancements
 // @namespace    http://tampermonkey.net/
-// @version      0.6
+// @version      0.7
 // @description  Apply custom styles to cq elements to fix issues
 // @author       YourName
 // @match        *://*/*
@@ -10,19 +10,26 @@
 // @downloadURL  https://raw.githubusercontent.com/kyleobyte/cqfix/main/kyles-tampermonkey-fixes.js
 // ==/UserScript==
 
-(function () {
-  'use strict';
+(function() {
+    'use strict';
 
-  const css = `
+    const css = `
 .cq-Overlay--placeholder {
 	color: #7000ff;
 	border-color: #7000ff;
-	background-color: rgba(255,255,255,0);
-	border-style: dashed;
-    border-radius:15px;
+	background-color: rgba(255, 255, 255, 0);
+	border-style: solid;
+	border-radius: 15px;
 	border-width: 2px;
 	margin: -0.125rem;
+	text-transform: uppercase;
+	font-size: 1rem;
 }
+
+.cq-Overlay--placeholder.is-hover{
+background-color:#7000ff22;
+}
+
 .scaffold-host-wizard .cq-RichText-editable, .cq-dialog .cq-RichText-editable, .scaffold-host-wizard .rte-sourceEditor, .cq-dialog .rte-sourceEditor {
 	overflow-y: auto;
 	background-color: #ccc;
@@ -52,6 +59,36 @@ width:100%;
 }
 
 
+/*Updating the component labels for better visibility*/
+.cq-Overlay.is-active, .cq-Overlay:focus, .cq-Overlay.is-hover, .cq-Overlay.is-selected {
+	color: #7000ff;
+	border-color: #7000ff;
+	border-radius: 15px;
+}
+
+.cq-Overlay.is-active>.cq-Overlay--component-name, .cq-Overlay:focus>.cq-Overlay--component-name, .cq-Overlay.is-hover>.cq-Overlay--component-name, .cq-Overlay.is-selected>.cq-Overlay--component-name {
+	display: block;
+	background-color: #7000ff;
+	border-radius: 15px;
+	padding: 5px 15px;
+}
+
+.cq-Overlay--component-name {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	z-index: 30;
+	display: none;
+	padding: 0 2px 1px 6px;
+	font-size: 1rem;
+	line-height: 1.1rem;
+	font-weight: 400;
+	letter-spacing: 0.05rem;
+	background-color: rgba(0, 0, 0, 0.3);
+	color: #fff;
+	text-transform: uppercase;
+}
+
 
 /* Pretty scrollbar
 ::-webkit-scrollbar {
@@ -76,8 +113,8 @@ coral-shell-content {
 
 `;
 
-  const style = document.createElement('style');
-  style.type = 'text/css';
-  style.innerHTML = css;
-  document.head.appendChild(style);
+    const style = document.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = css;
+    document.head.appendChild(style);
 })();
