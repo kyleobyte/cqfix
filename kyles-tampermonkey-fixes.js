@@ -54,10 +54,6 @@ coral-columnview-preview-asset img {
     width: 100%;
 }
 
-.cloudlets-app, .container, .ng-scope {
-width:100%;
-}
-
 
 /*Updating the component labels for better visibility*/
 .cq-Overlay.is-active, .cq-Overlay:focus, .cq-Overlay.is-hover, .cq-Overlay.is-selected {
