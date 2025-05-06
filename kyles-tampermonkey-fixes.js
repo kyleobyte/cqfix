@@ -85,6 +85,51 @@ coral-columnview-preview-asset img {
 	text-transform: uppercase;
 }
 
+/*Content fragment updates*/
+
+article.cmp-contentfragment {
+  width: 100%;
+  max-width: 100%;
+  margin: 30px 0px 30px 0px;
+  padding: 1rem 0;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.cmp-contentfragment__title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #002b45;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.25rem;
+}
+
+.cmp-contentfragment__element {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cmp-contentfragment__element-title {
+  width: 220px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.cmp-contentfragment__element-value {
+  flex: 1;
+  font-size: 1rem;
+  color: #222;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
 
 /* Pretty scrollbar
 ::-webkit-scrollbar {
