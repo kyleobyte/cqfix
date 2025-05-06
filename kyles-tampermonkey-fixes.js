@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CQ Style Enhancements
 // @namespace    http://tampermonkey.net/
-// @version      0.8
+// @version      0.9
 // @description  Apply custom styles to cq elements to fix issues
 // @author       YourName
 // @match        *://*/*
