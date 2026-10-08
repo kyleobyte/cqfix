@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CQ Style Enhancements
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      2.0
 // @description  Apply custom styles to cq elements to fix issues
 // @author       Kyle
 // @match        *://*/*
@@ -279,6 +279,32 @@ article.cmp-contentfragment {
     color: #111 !important;
 }
 
+.cq-xf-variation-btn {
+    position: absolute;
+    left: 6px;
+    top: 6px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    z-index: 31;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    line-height: 1;
+    color: #fff;
+    background: #ff00d4;
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.cq-Overlay--state-experience-fragment > .cq-xf-variation-btn {
+    background: #ffae00;
+    color: #111;
+}
+
 /* Final hover fill for State-Specific XF overlays. */
 .cq-Overlay.cq-Overlay--component.cq-Overlay--state-experience-fragment:hover,
 .cq-Overlay.cq-Overlay--component.cq-Overlay--placeholder.cq-Overlay--state-experience-fragment:hover,
@@ -372,13 +398,83 @@ article.cmp-contentfragment {
         });
     }
 
+    function findVariationPath(node) {
+        let fallback = null;
+        const walk = (obj, key) => {
+            if (typeof obj === 'string') {
+                if (/^\/content\/experience-fragments\//.test(obj)) {
+                    if (/variation/i.test(key)) return obj;
+                    fallback = fallback || obj;
+                }
+                return null;
+            }
+            if (obj && typeof obj === 'object') {
+                for (const [k, v] of Object.entries(obj)) {
+                    const hit = walk(v, k);
+                    if (hit) return hit;
+                }
+            }
+            return null;
+        };
+        return walk(node, '') || fallback;
+    }
+
+    // Fetched on click so it always reflects the variation currently saved in the dialog.
+    async function openVariation(overlay, button) {
+        const path = overlay.getAttribute('data-path');
+        if (!path) return;
+        button.style.opacity = '0.5';
+        try {
+            const res = await fetch(`${path}.2.json`, { credentials: 'same-origin' });
+            const variation = findVariationPath(await res.json());
+            if (!variation) {
+                alert('No XF variation path found on this component.');
+                return;
+            }
+            window.open(`/editor.html${variation.replace(/\.html$/, '')}.html`, '_blank');
+        } catch (e) {
+            console.error('XF variation lookup failed', e);
+        } finally {
+            button.style.opacity = '';
+        }
+    }
+
+    function addVariationButtons() {
+        document.querySelectorAll('.cq-Overlay').forEach((overlay) => {
+            const isXf = overlay.classList.contains('cq-Overlay--experience-fragment') ||
+                overlay.classList.contains('cq-Overlay--state-experience-fragment');
+            const existing = overlay.querySelector(':scope > .cq-xf-variation-btn');
+
+            if (!isXf) {
+                existing?.remove();
+                return;
+            }
+            if (existing) return;
+
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'cq-xf-variation-btn';
+            button.title = 'Open selected XF variation';
+            button.textContent = '\u270E';
+            button.addEventListener('mousedown', (e) => e.stopPropagation());
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                openVariation(overlay, button);
+            });
+            overlay.appendChild(button);
+        });
+    }
+
     function init() {
         injectStyles();
         markExperienceFragments();
+        addVariationButtons();
 
         const observer = new MutationObserver(() => {
             injectStyles();
             markExperienceFragments();
+            addVariationButtons();
         });
 
         observer.observe(document.documentElement, {
